@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Upload a label image, extract text with OCR, and review it side by side.">
+  <title>Label Text Reviewer</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">OCR WORKSPACE</p>
+      <h1>Label Text Reviewer</h1>
+      <p class="subtitle">Compare the original label with editable extracted text.</p>
+    </div>
+    <span class="privacy-tag">Images are not saved by this app</span>
+  </header>
+
+  <main>
+    <section class="upload-card" aria-label="Upload a label">
+      <div class="upload-copy">
+        <h2>1. Upload a label image</h2>
+        <p>Supported: JPG, PNG, WEBP, GIF, BMP, TIFF · Maximum 10 MB</p>
+      </div>
+      <label class="file-picker" for="imageInput">Choose image</label>
+      <input id="imageInput" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,image/tiff">
+      <span id="fileName" class="filename">No image selected</span>
+      <button id="extractBtn" class="primary" disabled>Extract text</button>
+    </section>
+
+    <div id="status" class="status" role="status" aria-live="polite">Choose an image to begin.</div>
+
+    <section class="workspace" aria-label="Image and extracted text">
+      <article class="panel image-panel">
+        <div class="panel-heading">
+          <div><span class="step">02</span><h2>Original label</h2></div>
+          <div class="zoom-controls">
+            <button id="zoomOut" class="small-button" disabled aria-label="Zoom out">−</button>
+            <span id="zoomLevel">100%</span>
+            <button id="zoomIn" class="small-button" disabled aria-label="Zoom in">+</button>
+            <button id="fitImage" class="small-button" disabled>Fit</button>
+          </div>
+        </div>
+        <div id="imageViewport" class="image-viewport">
+          <div id="emptyImage" class="empty-state">
+            <div class="empty-icon">▧</div>
+            <strong>Your image will appear here</strong>
+            <span>Upload a clear, well-lit picture of the label.</span>
+          </div>
+          <img id="previewImage" alt="Uploaded label preview" hidden>
+        </div>
+        <p class="hint">Tip: Use zoom to inspect small characters on the label.</p>
+      </article>
+
+      <article class="panel text-panel">
+        <div class="panel-heading">
+          <div><span class="step">03</span><h2>Extracted text</h2></div>
+          <span id="textCount" class="count">0 characters</span>
+        </div>
+        <label class="sr-only" for="ocrText">Extracted text. Edit this text to correct OCR mistakes.</label>
+        <textarea id="ocrText" placeholder="Extracted text will appear here. You can edit it after OCR finishes." spellcheck="false"></textarea>
+        <div class="text-actions">
+          <span class="hint">Review every character against the original image.</span>
+          <button id="copyBtn" class="primary" disabled>Copy corrected text</button>
+        </div>
+        <div id="copyStatus" class="copy-status" aria-live="polite"></div>
+      </article>
+    </section>
+
+    <section class="bottom-actions">
+      <div>
+        <h2>Ready for another label?</h2>
+        <p>Text is only held in this browser session. Copy it before clearing or reloading.</p>
+      </div>
+      <button id="clearBtn" class="secondary">Clear and start over</button>
+    </section>
+    <footer>Human review is required. OCR can confuse similar characters such as O/0, I/1, and B/8.</footer>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
